@@ -7,11 +7,6 @@
          <p>
             The current users of our system are:
             <ul>
-                <!-- <li 
-                    v-for="user in users" 
-                    :key="user.userName>
-                    {{ user.fullName }} - {{ user.userName }}
-                </li> -->
                 <li 
                   v-for="user in users"
                   :key="user.userName">
