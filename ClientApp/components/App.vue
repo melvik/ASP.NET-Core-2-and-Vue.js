@@ -14,10 +14,15 @@
                 </li>
             </ul>
         </p>
+
+        <product-list/>
+    <router-view />
+
     </div>
 </template>
 
 <script>
+import ProductList from "./products/List.vue";
 export default {
     name: 'app',
     data () {
@@ -33,6 +38,9 @@ export default {
             .then(data => {
                 this.users = data
             });
+    },
+    components: {
+        ProductList: ProductList
     }
 }
 </script>

@@ -1,0 +1,33 @@
+<template>
+
+    <div style="background-color: red;">
+      <product-details :product="product" />
+   </div>
+</template>
+
+<script>
+import ProductDetails from "../components/products/Details.vue";
+
+export default {
+  name: "product",
+  components: {
+    ProductDetails
+  },
+  data() {
+    return {
+      product: null
+    }
+  },
+  mounted() {
+    const slug = this.$route.params.slug;
+
+    fetch(`/api/products/${slug}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(product => {
+        this.product = product;
+      });
+  }
+}
+</script>
