@@ -1,8 +1,7 @@
 <template>
-
-    <div style="background-color: red;">
+  <div class="page">
       <product-details :product="product" />
-   </div>
+  </div>
 </template>
 
 <script>
@@ -18,16 +17,32 @@ export default {
       product: null
     }
   },
-  mounted() {
-    const slug = this.$route.params.slug;
+  methods: {
+    setData(product) {
+      this.product = product;
+    }
+  },
+  // mounted() {
+  //   const slug = this.$route.params.slug;
 
-    fetch(`/api/products/${slug}`)
+  //   fetch(`/api/products/${slug}`)
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(product => {
+  //       this.product = product;
+  //     });
+  // }
+  beforeRouteEnter(to, from, next) {
+    // NProgress.start();
+    fetch(`/api/products/${to.params.slug}`)
       .then(response => {
         return response.json();
       })
       .then(product => {
-        this.product = product;
-      });
-  }
+        next(vm => vm.setData(product))
+        // NProgress.done()
+      })
+    }
 }
 </script>
