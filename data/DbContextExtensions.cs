@@ -12,8 +12,16 @@ namespace be_master_with_core2.Data
 
         public static void EnsureSeeded(this EcommerceContext context)
         {
-            if (UserManager.FindByEmailAsync("stu@ratcliffe.io").
-            GetAwaiter().GetResult() == null)
+
+            AddUsers(context);
+            AddColoursFeaturesAndStorage(context);
+            AddOperatingSystemsAndBrands(context);
+            AddProducts(context);
+        }
+
+        private static void AddUsers(EcommerceContext context)
+        {
+            if (UserManager.FindByEmailAsync("stu@ratcliffe.io").GetAwaiter().GetResult() == null)
             {
                 var user = new AppUser
                 {
@@ -28,8 +36,6 @@ namespace be_master_with_core2.Data
 
                 UserManager.CreateAsync(user, "Password1*").GetAwaiter().GetResult();
             }
-
-            AddProducts(context);
         }
 
         private static void AddProducts(EcommerceContext context)
@@ -105,7 +111,7 @@ namespace be_master_with_core2.Data
                                 Price = 369M
                             }
                         }
-                    },
+                    }
                 // rest of product list omitted for brevity…
                 };
 
@@ -115,11 +121,10 @@ namespace be_master_with_core2.Data
         }
 
         private static void AddColoursFeaturesAndStorage(EcommerceContext context)
-        { 
+        {
             if (context.Colours.Any() == false)
             {
-                var colours = new List<string>() { "Black", "White", "Gold", 
-                "Silver", "Grey", "Spacegrey", "Red", "Pink" };
+                var colours = new List<string>() { "Black", "White", "Gold", "Silver", "Grey", "Spacegrey", "Red", "Pink" };
 
                 colours.ForEach(c => context.Add(new Colour
                 {
@@ -129,7 +134,30 @@ namespace be_master_with_core2.Data
                 context.SaveChanges();
             }
 
-        // rest of method omitted for brevity…
+            if (context.Storage.Any() == false)
+            {
+                var storage = new List<string>() { "4GB", "8GB", "16GB", "32GB", "64GB", "128GB", "256GB" };
+
+                storage.ForEach(s => context.Storage.Add(new Storage
+                {
+                    Capacity = s
+                }));
+
+                context.SaveChanges();
+            }
+
+            if (context.Features.Any() == false)
+            {
+                var features = new List<string>() { "3G", "4G", "Bluetooth", "WiFi", "Fast charge", "GPS", "NFC" };
+
+                features.ForEach(f => context.Add(new Feature
+                {
+                    Name = f
+                }));
+
+                context.SaveChanges();
+            }
+            // rest of method omitted for brevity…
         }
 
         private static void AddOperatingSystemsAndBrands(EcommerceContext context)
@@ -140,7 +168,19 @@ namespace be_master_with_core2.Data
 
                 os.ForEach(o => context.OS.Add(new OS
                 {
-                Name = o
+                    Name = o
+                }));
+
+                context.SaveChanges();
+            }
+
+            if (context.Brands.Any() == false)
+            {
+                var brands = new List<string>() { "Acme", "Globex", "Soylent", "Initech", "Umbrella" };
+
+                brands.ForEach(b => context.Brands.Add(new Brand
+                {
+                    Name = b
                 }));
 
                 context.SaveChanges();

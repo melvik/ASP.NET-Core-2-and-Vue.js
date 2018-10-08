@@ -1,11 +1,12 @@
 <template>
   <div class="page">
-      <product-details :product="product" />
+      <product-details v-if="product" :product="product" />
   </div>
 </template>
 
 <script>
-import ProductDetails from "../components/products/Details.vue";
+import axios from "axios"
+import ProductDetails from "../components/products/Details.vue"
 
 export default {
   name: "product",
@@ -33,16 +34,23 @@ export default {
   //       this.product = product;
   //     });
   // }
+  // beforeRouteEnter(to, from, next) {
+  //   // NProgress.start();
+  //   fetch(`/api/products/${to.params.slug}`)
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(product => {
+  //       next(vm => vm.setData(product))
+  //       // NProgress.done()
+  //     })
+  //   }
   beforeRouteEnter(to, from, next) {
-    // NProgress.start();
-    fetch(`/api/products/${to.params.slug}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(product => {
-        next(vm => vm.setData(product))
-        // NProgress.done()
-      })
-    }
+    axios
+    .get(`/api/products/${to.params.slug}`)
+    .then(response => {
+      next(vm => vm.setData(response.data));
+    });
+  }
 }
 </script>

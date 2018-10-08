@@ -30,9 +30,7 @@ namespace be_master_with_core2.Data.Entities
     public List<Image> Images { get; set; }
     public Brand Brand { get; set; }
     public OS OS { get; set; }
-    public List<ProductFeature> ProductFeatures { get; set; } = 
-    new List<ProductFeature>();
-    public List<ProductVariant> ProductVariants { get; set; } = 
-    new List<ProductVariant>();
+    public List<ProductFeature> ProductFeatures { get; set; } = new List<ProductFeature>();
+    public List<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
   }
 }
