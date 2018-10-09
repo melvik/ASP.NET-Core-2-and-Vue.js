@@ -8,16 +8,17 @@ module.exports = (env) => {
 
     return [{
         stats: { modules: false },
-        resolve: { extensions: [ '.js' ] },
+        resolve: { extensions: [ '.js', '.vue' ] },
         entry: {
             vendor: [
                 'event-source-polyfill',
                 'axios',
                 'vue',
                 'vue-router',
-                "bootstrap/dist/css/bootstrap.min.css",
-                "bootstrap-vue",
-                "nprogress/nprogress.css"
+                'vuex',
+                'bootstrap/dist/css/bootstrap.min.css',
+                'bootstrap-vue',
+                'nprogress/nprogress.css'
             ],
         },
         module: {

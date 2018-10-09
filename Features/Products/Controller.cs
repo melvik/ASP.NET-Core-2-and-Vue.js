@@ -73,6 +73,42 @@ namespace be_master_with_core2.Features.Products
             return Ok(products);
 
         }
+
+        ///////////
+        var product =await_db.Products.Select(x =>newProductDetailsViewModel
+{
+  Id=x.Id,
+  Slug=x.Slug,
+  Name=x.Name,
+  ShortDescription=x.ShortDescription,
+  Description=x.Description,
+  Price=x.ProductVariants.OrderBy(v =>v.Price).First().Price,
+  Thumbnail=x.Thumbnail,
+  Images=x.Images.Select(i =>i.Url),
+  Features=x.ProductFeatures.Select(f =>f.Feature.Name),
+  Colours=x.ProductVariants.Select(v =>newSelectListItem
+  {
+    Value=v.ColourId.ToString(),
+    Text=v.Colour.Name
+  }).Distinct(),
+  Storage=x.ProductVariants.Select(v =>newSelectListItem
+  {
+    Value=v.StorageId.ToString(),
+    Text=v.Storage.Capacity.ToString() +"GB"
+  }).Distinct(),
+  Variants=x.ProductVariants.Select(v =>newProductVariantViewModel
+  {
+    ProductId=x.Id,
+    Name=x.Name,
+    Thumbnail=x.Thumbnail,
+    ColourId=v.ColourId,
+    Colour=v.Colour.Name,
+    StorageId=v.StorageId,
+    Capacity=$"{v.Storage.Capacity}GB",
+    Price=v.Price
+  })
+})
+.FirstOrDefaultAsync(x =>x.Slug==slug);
         */
 
         [HttpGet("{slug}")]

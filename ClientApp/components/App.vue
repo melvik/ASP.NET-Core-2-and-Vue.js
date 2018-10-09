@@ -7,6 +7,10 @@
             <b-navbar-nav>
               <b-nav-item to="/products">Products</b-nav-item>
             </b-navbar-nav>
+            <b-navbar-nav class="ml-auto mr-4">
+              <!-- <b-nav-item to="/cart">Cart</b-nav-item> -->
+              <cart-summary />
+            </b-navbar-nav>
           </b-collapse>
       </b-navbar>
 
@@ -17,7 +21,9 @@
 </template>
 
 <script>
-import ProductList from "./products/List.vue";
+import ProductList from "./products/List.vue"
+import CartSummary from"./cart/CartSummary.vue";
+
 export default {
     name: 'app',
     data () {
@@ -35,7 +41,11 @@ export default {
             });
     },
     components: {
-        ProductList: ProductList
+        ProductList,
+        CartSummary
+    },
+    beforeCreate() {
+      this.$store.commit("initialise");
     }
 }
 </script>
